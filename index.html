@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Layer - Parallax Template</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css"> <!-- Font Awesome -->
+        <link rel="stylesheet" href="css/wow-animate.css"> <!-- Wow Animate -->
+        <link rel="stylesheet" href="css/templatemo-style.css">
+        <script src="js/domReady.js"></script>
+        <script src="js/move.js"></script>
+        <script src="js/puzzle.js"></script>
+        <script>
+
+          window.onload=function(){
+            var oPzl=document.getElementById('puzzle');
+            var aInput=oPzl.getElementsByTagName('input');
+            var oDiv=oPzl.getElementsByTagName('div')[0];
+            var arrImg=['pic1.png','pic2.png','pic3.png','pic4.png','pic5.png','pic6.png'];
+            var iNow=0;
+
+            aInput[0].onclick=function () {
+              iNow++;
+              oDiv.innerHTML='';
+              oDiv.style.background='url(images/'+arrImg[iNow%6]+')';
+
+
+            }
+            //点击打乱顺序
+            aInput[1].onclick=function() {
+              Drag(oDiv,5,8,100,'images/'+arrImg[iNow%6]);
+
+            }
+            //点击打乱顺序
+            aInput[2].onclick=function() {
+              Drag(oDiv,10,16,50,'images/'+arrImg[iNow%6]);
+
+            }
+
+            var oMus=document.getElementById('music');
+            oMus.onclick=function () {
+              window.open('music.html')
+            }
+            var oWel=document.getElementById('wel');
+            oWel.onclick=function () {
+              window.open('welfare.html')
+            }
+
+            //轮播图
+            var oBan=document.getElementById('banner');
+            var oBox=oBan.querySelector('.pic');
+            var R = 6;
+            var C = 8;
+            var iNow2=0;
+            oBox.style.backgroundImage='url(images/'+arrImg[1]+')';
+            for (var r = 0; r < R; r++) {
+              for (var c = 0; c < C; c++) {
+                var oPage = document.createElement('div');
+                oPage.classList.add('page');
+                oBox.appendChild(oPage);
+
+                var w = oPage.offsetWidth;
+                var h = oPage.offsetHeight;
+                oPage.style.left = c * w + 'px';
+                oPage.style.top = r * h + 'px';
+
+                oPage.style.background = 'url(images/'+arrImg[0]+') no-repeat ' + (-c * w) + 'px ' + (-r * h) + 'px';
+              }
+            }
+            var aPage = oBox.querySelectorAll('.page');
+            setInterval(function () {
+              iNow2++;
+              for(i=0;i<aPage.length;i++){
+                aPage[i].style.transition='1s all ease';
+                aPage[i].style.transformOrigin='center center';
+                var x=oBox.offsetWidth/2-aPage[i].offsetLeft-aPage[i].offsetWidth/2;
+                var y=oBox.offsetHeight/2-aPage[i].offsetTop-aPage[i].offsetHeight/2;
+                aPage[i].style.transform='perspective(800px)  translateX('+(-x)+'px) translateY('+(-y)+'px) translateZ(50px) rotateY('+rnd(-180,180)+'deg) rotateY('+rnd(-180,180)+'deg)';
+                aPage[i].style.opacity='0';
+              }
+            },3000);
+            //console.log(bReady);
+            aPage[0].addEventListener('transitionend',function () {
+
+              for(var i=0;i<aPage.length;i++){
+                aPage[i].style.transition='none';
+                aPage[i].style.transform='perspective(800px) translateX(0px) translateY(0px) translateZ(0px) rotateY(0deg) rotateX(0deg) ';
+                aPage[i].style.opacity='1';
+                aPage[i].style.backgroundImage='url(images/'+arrImg[iNow2%6]+')';
+              }
+              oBox.style.backgroundImage='url(images/'+arrImg[(iNow2+1)%6]+')';
+
+            },false);
+            //console.log(bReady);
+
+          }
+          function rnd(n,m) {
+            return parseInt(Math.random()*(m-n)+n);
+          }
+        </script>
+    </head>
+    <body>
+    <!--music-->
+    <audio id="" loop autoplay>
+        <source src="images/music.mp3" >
+    </audio>
+    <!--music end-->
+    <div></div>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <div class="header" id="top">
+        <nav class="navbar navbar-inverse" role="navigation">
+          <div class="container">
+              <div class="navbar-header">
+                  <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a href="#" class="navbar-brand scroll-top"><img src="images/logo.png" alt="Layer Template">Layer</a>
+              </div>
+              <!--/.navbar-header-->
+              <div id="main-nav" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="index.html">首页</a></li>
+                  <li><a href="#">音乐作品</a>
+                    <ul class="sub-menu">
+                      <li><a href="left_sidebar.html">《Light》</a></li>
+                      <li><a href="right_sidebar.html">亚洲巡回签唱会</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="columns.html">影视作品</a></li>
+                  <li><a href="columns.html">杂志</a></li>
+                </ul>
+              </div>x
+              <!--/.navbar-collapse-->
+      		</div>
+      		<!--/.container-->
+      </nav>
+          <!--/.navbar-->
+    </div>
+    <!--/.header-->
+
+    <div class="copyrights">Collect from <a href="http://www.cssmoban.com/" >免费模板</a></div>
+    <div class="parallax">
+
+
+      <div class="bg__first templatemo-position-relative" id="bg_first">
+        <div class="container">
+          <div class="templatemo-flexbox">
+            <div class="row">
+              <div class="col-md-4 col-sm-4 col-xs-12">
+                <div class="left-image wow animated fadeInLeft">
+                  <img src="images/creative-writing.png" alt="creative writing" class="img-responsive">
+                </div>
+              </div>
+              <div class="col-md-8 col-sm-8 col-xs-12">              
+                <div class="right-caption wow animated fadeInRight">
+                  <h4>向全世界安利许魏洲</h4>
+                  <h2><span class="yellow">Timmy</span> 许魏洲</h2>
+                  <p>许魏洲，1994年10月20日出生于中国上海，中国内地 <span class="yellow">演员、歌手</span><span class="lightgreen"></span> <a rel="nofollow" href="#"><span class="yellow"></span></a></p>
+                  <p>2015年10月，拍摄青春励志电影<span class="lightgreen">《电竞也疯狂》</span>，首次拍摄电影。2016年1月，主演网络剧<span class="lightgreen">《上瘾》</span>并正式出道，同时透过该剧被观众熟知，该剧总点击量过亿。2016年4月9日，在第16界音乐风云榜年度盛典被评为<span class="lightgreen">“最受欢迎网剧偶像”</span>。2016年4月22日，为电影《谁的青春不迷茫》演唱推广曲<span class="lightgreen">《想着光亮那方》</span>。2016年5月1日，发布首张专辑<span class="lightgreen">《Light》</span>，2016年7月8日，参与配音的电影<span class="lightgreen">《大鱼海棠》</span>上映......<a rel="nofollow" href="#"><span class="yellow"></span></a></p>
+                  <div class="stroked-button"><a href="http://baike.chinaso.com/wiki/doc-view-244549.html" class="scroll-link" data-id="second-section">Read More</a></div><br>
+                </div>
+              </div>
+            </div>            
+          </div>          
+        </div>
+        <div class="arrow text-center">
+          <a href="#" class="scroll-link btn btn-dark" data-id="second-section"><i class="fa fa-angle-down"></i></a>
+        </div>
+      </div>
+
+
+      <div id="second-section"> 
+        <div class="bg__second"> 
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 fadeInUp">
+            <div class="sevice-items">
+              <div class="col-md-3 col-sm-6 wow bounceInUp">
+                <div class="single-item">
+                  <i class="fa fa-camera"></i>
+                  <h2>音乐作品</h2>
+                  <p> 2016年5月发布个人专辑《Light》, 收录包括个人写作的7首单曲 ; 2016年4月发布电影《谁的青春不迷茫》网络推广曲《向着光亮那方》</p>
+
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 wow bounceInUp">
+                <div class="single-item">
+                  <i class="fa fa-refresh"></i>
+                  <h2>影视作品</h2>
+                  <p>2015年参演电影《电竞也疯狂》饰队长岳弘生;2015年参演网络电视剧《上瘾》饰白洛因;2016年参与国产漫画电影《大鱼海棠》制作,配音鲲</p>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 wow bounceInUp" id="wel">
+                <div class="single-item">
+                  <i class="fa fa-link"></i>
+                  <h2>公益活动</h2>
+                  <p>2016年2月参加网易“反家暴直播”;2016年6月向中国红十字基金会捐赠10万元善款;2016年7月向北京市残疾人福利基金会赠款50万元，设立光·爱关注盲童公益基金</p>
+                </div>
+              </div>
+              <div class="col-md-3 col-sm-6 wow bounceInUp" id="music">
+                <div class="single-item">
+                    <i class="fa fa-download"></i>
+                    <h2>音乐活动</h2>
+                    <p>2016年6月北京举办首场签唱会,为2016许魏洲Light亚洲巡演拉开序幕,并依次在韩国首尔、深圳、泰国曼谷开场,并于8月13日在上海收官。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="service-arrow">
+              <a href="#" class="scroll-link btn btn-dark" data-id="third-section"><i class="fa fa-angle-down"></i></a>
+            </div>
+          </div>
+        </div>        
+      </div>
+
+
+      <div class="bg__third">
+        <div id="third-section">
+          <div class="container">
+            <div class="row">
+              <div class="game" id="banner">
+                <div class="pic" ></div>
+              </div>
+              <div class="col-md-4 col-sm-6 col-xs-10 wow animated fadeInLeft">
+                <div class="left-text">
+                  <h2>.03 Section Three Title</h2>
+                  <div class="line"></div>
+                  <p>Please tell your friends about <span class="blue">template</span><span class="green">mo</span>.com website. Ut at nisl sem. Praesent ac efficitur mi. Sed fermentum iaculis accumsan. Mauris rutrum dignissim eros id finibus sed turpis in diam mollis lobortis. <br><br>Phasellus tincidunt leo ante, quis convallis lectus pretium vel. Ut blandit, est eget feugiat laoreet, magna nisi volutpat ligula, commodo efficitur metus magna vel sapien.</p>
+                  <div class="button">
+                    <a href="#">Read More</a>
+                  </div>                  
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 templatemo-position-relative">
+                <div class="fourth-arrow">
+                  <a href="#" class="scroll-link btn btn-dark" data-id="fourth-section"><i class="fa fa-angle-down"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="bg__fourth">
+        <div id="fourth-section">
+          <div class="container">
+            <div class="row">
+              <div class="game" id="puzzle">
+                <input type="button" value="换一张">
+                <input type="button" value="第一关">
+                <input type="button" value="第二关">
+                <div class="pic" ></div>
+              </div>
+              <div class="col-md-4 col-md-offset-8 col-sm-6 col-xs-10 col-xs-offset-1 wow animated fadeInLeft">
+                <div class="left-text">
+                  <h2>Timmy拼图小游戏</h2>
+                  <div class="line"></div>
+                  <p>1、点击换一张按钮,更换背景图片<br>2、游戏难度为两级<br>3、点击拖动块至正确位置<br/>4、直至所有滑块回到正确位置,则成功</p>
+                  <!--<div class="button">
+                    <a href="#">Read More</a>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="fourth-arrow">
+                <a href="#" class="scroll-link btn btn-dark" data-id="fifth-section"><i class="fa fa-angle-down"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div id="fifth-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-xs-12 wow animated fadeInDown">
+              <h1>Fill This Application Now!</h1>
+              <div class="col-md-12">
+                <p>Nulla aliquam felis mi, volutpat convallis lorem eleifend id. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+              </div>
+            </div>
+          </div>
+          <form action="#" method="get">
+          <div class="row">
+          	
+            <div class="col-md-8 col-md-offset-2 wow animated fadeInUp">
+            
+              <div class="submit-form">
+              	
+                <div class="col-md-3">
+                  <input name="name" type="text" id="name" placeholder="Your name..."/>
+                </div>
+                
+                <div class="col-md-3">
+                  <input name="email" type="text" id="email" placeholder="Your email..."/>
+                </div>
+                
+                <div class="col-md-3">
+                  <select name="gender" id="gender">
+                    <option value="null">Gender</option>
+                  	<option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                </div>
+                
+                <div class="col-md-3">
+                  <select name="age" id="age">
+                    <option value="null">Age</option>
+                  	<option value="18-24">18 - 24</option>
+                    <option value="25-30">25 - 30</option>
+                    <option value="31-40">31 - 40</option>
+                    <option value="41-60">41 - 60</option>
+                </select>
+                </div>
+                
+              </div><!-- submit form -->
+              
+            </div>
+            
+            </div>
+            
+            <div class="row">
+            
+                <div class="col-md-4 col-md-offset-5 wow animated fadeInUp">
+                    <input type="submit" value="Submit" class="templatemo-submit" />
+                </div>
+           	 
+          	</div>
+            
+          </form>
+        </div>
+      </div>
+
+
+      <footer>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="social-icons">
+                <ul>
+                  <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                  <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                  <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                  <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                  <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                  <li><a href="#"><i class="fa fa-google"></i></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="copyright-text">
+              <p>More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="third-arrow">
+              <a href="#" class="scroll-link btn btn-dark" data-id="top"><i class="fa fa-angle-up"></i></a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </div>   
+
+	<!-- templatemo 438 layer -->
+  </body>
+</html>
