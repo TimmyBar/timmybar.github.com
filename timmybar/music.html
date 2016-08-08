@@ -1,0 +1,165 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{margin:0;padding:0;list-style:none;}
+        html{overflow:hidden;}
+        body{background:#000;}
+        #ul1{position:relative;width:110px; height:160px; -background:#ccc; margin:150px auto;
+            transform-style:preserve-3d;
+            transform:perspective(800px) rotateX(-15deg) rotateY(0deg);
+        }
+        #ul1 li{position:absolute;left:0;top:0; width:100%; height:100%;
+            transform:rotateY(0deg) translateZ(0px);
+            /*倒影*/
+            -webkit-box-reflect:below 10px -webkit-linear-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1));
+            border-radius:20px; overflow:hidden;
+            box-shadow:0 0 10px #fff;
+            background:yellow; line-height:200px; text-align:center;
+        }
+        #ul1 li img{
+            width:110px;
+            height:160px;
+        }
+
+    </style>
+    <script>
+        window.onload = function(){
+            var oUl = document.getElementById("ul1");
+            var aLi = oUl.children;
+            var len = aLi.length;
+
+            //散开 360/len*index
+            for(var i = 0; i < len; i++){
+                var d = 360/len*i;
+                aLi[i].style.transition = "1s all ease "+200*(len-i)+"ms";
+                aLi[i].style.transform = "rotateY("+d+"deg) translateZ(300px)";
+            }
+            //关灯
+            aLi[0].addEventListener("transitionend",function(){
+                setMove();
+                setOpacity();
+            },false);
+
+
+            function setMove(){
+                for(var i = 0; i < len; i++){
+                    aLi[i].style.transition = "1s all ease";
+                }
+            }
+            function clearMove(){
+                for(var i = 0; i < len; i++){
+                    aLi[i].style.transition = "none";
+                    console.log(aLi[i].style.transition);
+                }
+            }
+
+
+            function setOpacity(){
+                for(var i = 0; i < len; i++){
+
+                    var d = Math.abs(360/len*i + y/10)%360;
+                    if(d > 180){
+                        d = 360 - d;
+                    }
+
+                    d = (180 - d)/180;
+
+                    d < 0.3 && (d = 0.3);
+
+                    //aLi[i].innerHTML = d.toFixed(2);
+
+                    aLi[i].style.opacity = d;
+                }
+            }
+
+
+            var timer = null;
+            var speedX = 0;
+            var speedY = 0;
+            var lastX = 0;
+            var lastY = 0;
+
+            var y = 0;//x轴
+            var x = 150;//y轴
+            document.onmousedown = function(ev){
+                clearMove();
+
+
+                var disX = ev.clientX - y;
+                var disY = ev.clientY - x;
+
+                document.onmousemove = function(ev){
+                    y = ev.clientX - disX;
+                    x = ev.clientY - disY;
+
+                    //限定范围
+                    if(x > 600){
+                        x = 600;
+                    } else if(x < -600){
+                        x = -600;
+                    }
+                    oUl.style.transform = "perspective(800px) rotateX("+-x/10+"deg) rotateY("+y/10+"deg)";
+
+
+                    //算速度
+                    speedX = x - lastX;
+                    speedY = y - lastY;
+                    lastX = x;
+                    lastY = y;
+
+                    setOpacity();
+                };
+                document.onmouseup = function(){
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+
+                    clearInterval(timer);
+                    timer = setInterval(function(){
+
+                        x += speedX;
+                        y += speedY;
+
+                        speedX *= 0.8;
+                        speedY *= 0.8;
+
+                        if(Math.abs(speedX) < 1){
+                            speedX = 0;
+                        }
+                        if(Math.abs(speedY) < 1){
+                            speedY = 0;
+                        }
+
+                        if(speedX == 0 && speedY == 0){
+                            clearInterval(timer);
+                        }
+                        oUl.style.transform = "perspective(800px) rotateX("+-x/10+"deg) rotateY("+y/10+"deg)";
+
+                    },30);
+                };
+                return false;
+            };
+
+
+
+        };
+    </script>
+</head>
+
+<body>
+<ul id="ul1">
+    <li><img src="images/img1.png" /></li>
+    <li><img src="images/img2.png" /></li>
+    <li><img src="images/img3.png" /></li>
+    <li><img src="images/img4.png" /></li>
+    <li><img src="images/img5.png" /></li>
+    <li><img src="images/img6.png" /></li>
+    <li><img src="images/img7.png" /></li>
+    <li><img src="images/img8.png" /></li>
+
+</ul>
+</body>
+</html>

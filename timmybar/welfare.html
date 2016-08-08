@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        #box{
+            width: 800px;
+            height: 600px;
+            background: url(images/img1.png) no-repeat;
+            position: absolute;
+            left:50%;
+            top:50%;
+            margin-left: -400px;
+            margin-top: -300px;
+            transform:perspective(800px) rotateX(20deg);
+
+        }
+        #box .page{
+            width: 400px;
+            height: 600px;
+            position: absolute;
+            left:400px;
+            top: 0px;
+            transform-style:preserve-3d;
+            transform-origin: left center;
+            transform:perspective(800px) rotateY(0deg) ;
+            z-index: 2;
+
+        }
+        #box .page2{
+            width: 400px;
+            height: 600px;
+            position: absolute;
+            left:400px;
+            top: 0px;
+            background: url(images/img4.png) no-repeat ;
+            z-index: 1;
+        }
+        #box .page .fPage{
+            width: 400px;
+            height: 600px;
+            position: absolute;
+            left:0;
+            top: 0;
+            background:url(images/img2.png) no-repeat ;
+            z-index: 2;
+            transform:translateZ(1px) ;
+        }
+        #box .page .bPage{
+            width: 400px;
+            height: 600px;
+            position: absolute;
+            left:0;
+            top: 0;
+            background: url(images/img3.png) no-repeat;
+            z-index: 1;
+            transform:translateZ(-1px) scale(-1,1);
+
+        }
+        /* #box:hover .page{
+             transform:perspective(800px) rotateY(-180deg)  ;
+         }*/
+    </style>
+    <script>
+        window.onload=function () {
+            var oBox=document.getElementById('box');
+            var oPage=oBox.querySelector('.page');
+            var oPage2=oBox.querySelector('.page2');
+            var ofPage=oPage.querySelector('.fPage');
+            var obPage=oPage.querySelector('.bPage');
+
+            var arrImg=['img1.png','img2.png','img3.png','img4.png','img5.png','img6.png','img7.png','img8.png'];
+            setInterval(function () {
+                oPage.style.transition='1s all ease';
+                oPage.style.transform='perspective(800px) rotateY(-180deg)';
+            },3000);
+
+
+
+            var iNow=0;
+            oPage.addEventListener('transitionend',function () {
+                iNow+=2;
+                oBox.style.background='url(images/'+arrImg[(iNow)%8]+') no-repeat';
+                ofPage.style.background='url(images/'+arrImg[(iNow+1)%8]+') no-repeat ';
+                obPage.style.background='url(images/'+arrImg[(iNow+2)%8]+') no-repeat';
+                oPage2.style.background='url(images/'+arrImg[(iNow+3)%8]+') no-repeat';
+                oPage.style.transition='none';
+                oPage.style.transform='perspective(800px) rotateY(0deg)';
+
+            },false);
+        }
+    </script>
+</head>
+<body>
+<div id="box">
+    <div class="page">
+        <div class="fPage"></div>
+        <div class="bPage"></div>
+    </div>
+    <div class="page2"></div>
+</div>
+</body>
+</html>
